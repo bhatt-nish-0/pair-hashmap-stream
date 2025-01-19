@@ -5,10 +5,7 @@ import javafx.util.Pair;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -58,6 +55,129 @@ public class PairController {
 
             return lo.getName().toUpperCase();
         }).map(String::toLowerCase).collect(Collectors.toList());
+    }
+
+    @GetMapping("/getPairSchStudentsGrades")
+    public Pair<School,Map<Student, Set<GradeSubject>>> doSomething() {
+        School school  = new School();
+        school.setSchoolName("ngee ann");
+        school.setAddress("2C Kee Sun Avenue");
+
+        Map<Student,Set<GradeSubject>> map = new HashMap<>();
+
+        Student student = new Student();
+        student.setId(23L);
+        student.setName("nish");
+
+        Student student1 = new Student();
+        student1.setId(27L);
+        student1.setName("prayag");
+
+        Set<GradeSubject> nishGradeSubjectSet1 = new HashSet<>();
+        Set<GradeSubject> nishGradeSubjectSet2 = new HashSet<>();
+
+        GradeSubject gradeSubject = new GradeSubject();
+        gradeSubject.setSubject("science");
+        gradeSubject.setGradeScore(67L);
+
+        GradeSubject gradeSubject1 = new GradeSubject();
+        gradeSubject1.setSubject("maths");
+        gradeSubject1.setGradeScore(33L);
+
+        GradeSubject gradeSubject2 = new GradeSubject();
+        gradeSubject2.setSubject("science");
+        gradeSubject2.setGradeScore(83L);
+
+        GradeSubject gradeSubject3 = new GradeSubject();
+        gradeSubject3.setSubject("maths");
+        gradeSubject3.setGradeScore(103L);
+
+        nishGradeSubjectSet1.add(gradeSubject);
+        nishGradeSubjectSet1.add(gradeSubject1);
+
+        nishGradeSubjectSet2.add(gradeSubject2);
+        nishGradeSubjectSet2.add(gradeSubject3);
+
+        map.put(student,nishGradeSubjectSet1);
+        map.put(student1,nishGradeSubjectSet2);
+
+        Pair<School, Map<Student,Set<GradeSubject>>> x = new Pair<>(school,map);
+
+        Map<Student, Set<GradeSubject>> value = x.getValue();
+
+        return x;
+
+    }
+}
+
+class School {
+    private String schoolName;
+    private String address;
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+}
+
+class Student {
+    private long id;
+    private String name;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+class GradeSubject {
+    private long gradeScore;
+    private String subject;
+
+    public long getGradeScore() {
+        return gradeScore;
+    }
+
+    public void setGradeScore(long gradeScore) {
+        this.gradeScore = gradeScore;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }
 
